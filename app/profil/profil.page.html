@@ -1,0 +1,59 @@
+<ion-buttons slot="start" style="margin-left: 10px;">
+  <ion-back-button defaultHref="/home" style="color: black;"></ion-back-button>
+</ion-buttons>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div class="profile-container" style="text-align: center; margin-top: 40px;">
+    <ion-avatar class="avatar" style="width: 120px; height: 120px; margin: auto;">
+      <img src="assets/icon/profil.jpg" alt="User Profile" />
+    </ion-avatar>
+    <h2 class="username" style="margin-top: 15px; color: #8B4513;">{{ user.username }}</h2>
+    <p class="email" style="color: #A0522D;">{{ user.email }}</p>
+  </div>
+
+  <ion-list lines="none" class="profile-options" style="margin-top: 30px;">
+    <ion-item button (click)="goToEditProfile()">
+      <ion-icon name="create-outline" slot="start" style="color: #8B4513;"></ion-icon>
+      <ion-label>Edit Profil</ion-label>
+    </ion-item>
+
+    <!-- <ion-item button (click)="goToOrderHistory()">
+      <ion-icon name="receipt-outline" slot="start" style="color: #8B4513;"></ion-icon>
+      <ion-label>Riwayat Pesanan</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="goToPaymentMethods()">
+      <ion-icon name="card-outline" slot="start" style="color: #8B4513;"></ion-icon>
+      <ion-label>Metode Pembayaran</ion-label>
+    </ion-item> -->
+
+    <!-- <ion-item button (click)="goToHelp()">
+      <ion-icon name="help-circle-outline" slot="start" style="color: #8B4513;"></ion-icon>
+      <ion-label>Bantuan</ion-label>
+    </ion-item> -->
+
+    <ion-item lines="full" button color="danger" (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      <ion-label>Keluar</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button routerLink="/home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button routerLink="/order">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <ion-label>Pesanan</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button routerLink="/profil">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Profil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

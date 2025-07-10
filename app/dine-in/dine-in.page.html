@@ -1,0 +1,141 @@
+
+<ion-content class="ion-padding" >
+
+  <ng-container *ngIf="orderType === 'reservasi' && ! hasUnsavedTasks">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Pilih Meja</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-radio-group [(ngModel)]="selectedMeja">
+          <ion-list >
+              <ion-item *ngFor="let meja of mejaList">
+                <ion-label>
+                  {{ meja.nama_meja }}
+                  <ion-text color="medium" *ngIf="meja.status_meja === 'terisi'"> - Dipesan</ion-text>
+                  <ion-text color="success" *ngIf="meja.status_meja === 'tersedia'"> - Tersedia</ion-text>
+                </ion-label>
+                <ion-radio slot="end" [value]="meja" [disabled]="meja.status_meja === 'terisi'"></ion-radio>
+              </ion-item>
+          </ion-list>
+        </ion-radio-group>
+        <ion-button expand="block" color="primary" (click)="konfirmasiPilihMeja()" disabled="{{mejaList.length == 0 || !selectedMeja}}">
+          Konfirmasi
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+  
+  <ng-container *ngIf="orderType !== 'reservasi' || hasUnsavedTasks">
+
+    <!-- Search Bar -->
+    <ion-searchbar placeholder="Search your food" animated (ionInput)="filterItems($event)">
+    </ion-searchbar>
+
+    <!-- Dine In Section -->
+    <ion-card>
+      <ion-card-content class="ion-text-center">
+        <div *ngIf="orderType === 'reservasi'">
+          <ion-icon name="calendar-outline" size="large"></ion-icon>
+          <h2>RESERVE</h2>
+          <p *ngIf="selectedMeja">Meja: {{ selectedMeja.nama_meja }}</p>
+        </div>
+        <div *ngIf="orderType === 'takeaway'">
+          <ion-icon name="bag" size="large"></ion-icon>
+          <h2>TAKE AWAY</h2>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Menu Tabs -->
+    <ion-segment (ionChange)="onCategoryChange($event)" scrollable>
+      <ion-item *ngFor="let data of kategoriList">
+        <ion-segment-button value="{{ data.id }}">{{ data.nama_kategori }}</ion-segment-button>
+      </ion-item>
+    </ion-segment>
+
+    <div *ngFor="let kategori of kategoriList">
+      <ion-text color="dark" class="section-title">
+        <h2 id="{{ kategori.id }}">{{ kategori.nama_kategori }} </h2>
+      </ion-text>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col
+          *ngFor="let menu of menuList"
+          [hidden]="menu.id_kategori !== kategori.id || ! cartFilteredIds['includes'](menu.id) && searchTerm !==''"
+          size="6"
+          size-md="4"
+          size-lg="2"
+          >
+            <ion-card  class="menu-card" (click)="openFoodDetail(menu)">
+              <img [src]="menu.gambar_menu" class="menu-img" />
+              <div class="menu-text">
+                <div class="menu-header">
+                  <p class="menu-title">{{ menu.nama_menu }}</p>
+                  <p class="menu-price" style="margin-top: 8px; margin-bottom: 8px;">{{ menu.harga_menu }}</p>
+                </div>
+
+                <div *ngIf="cartList['hasOwnProperty'](menu.id) && cartList[menu.id] > 0; else addButton" class="counter">
+                  <ion-button size="small" fill="clear" (click)="decreaseFromCart(menu.id); $event.stopPropagation()">
+                    <ion-icon name="remove"></ion-icon>
+                  </ion-button>
+                  <span>{{ cartList[menu.id] }}</span>
+                  <ion-button size="small" fill="clear" (click)="increaseToCart(menu.id); $event.stopPropagation()">
+                    <ion-icon name="add"></ion-icon>
+                  </ion-button>
+                </div>
+
+                <ng-template #addButton>
+                  <ion-button size="small" fill="solid" color="dark" (click)="increaseToCart(menu.id); $event.stopPropagation()">
+                    <ion-icon name="add"></ion-icon>
+                  </ion-button>
+                </ng-template>
+
+                <p class="menu-info">
+                  <ion-icon name="time-outline"></ion-icon>{{ menu.waktu_saji }}min
+                  <ion-icon name="flame-outline" color="danger"></ion-icon>
+                </p>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ng-container>
+</ion-content>
+
+<ion-footer *ngIf="cartTotalCount > 0" style="background: transparent; padding: 8px;">
+  <ion-toolbar style="
+      --background: #f0d8b1;
+      color: black;
+      border-radius: 30px;
+      margin: auto;
+  ">
+    <ion-title style="font-size: 16px;">
+      Checkout ({{ cartTotalCount }} item{{ cartTotalCount > 1 ? 's' : '' }})
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToOrderDetail()">Checkout</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button routerLink="/home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button routerLink="/order">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <ion-label>Pesanan</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button routerLink="/profil">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Profil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

@@ -1,0 +1,60 @@
+
+<ion-buttons slot="start" style="margin-left: 10px;">
+  <ion-back-button defaultHref="/home" style="color: black;"></ion-back-button>
+</ion-buttons>
+
+<ion-content class="ion-padding">
+
+  <ion-list lines="full" class="form-list">
+    <ion-item>
+      <ion-icon name="person-circle-outline" slot="start" color="medium"></ion-icon>
+      <ion-label position="floating">Nama Pengguna</ion-label>
+      <ion-input type="text" [(ngModel)]="user.username" name="username" clearInput></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="mail-outline" slot="start" color="medium"></ion-icon>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" [(ngModel)]="user.email" name="email" clearInput></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="call-outline" slot="start" color="medium"></ion-icon>
+      <ion-label position="floating">Nomor Telepon</ion-label>
+      <ion-input type="tel" [(ngModel)]="user.phone" name="phone" clearInput></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" (click)="saveProfile()" class="save-button">
+    <ion-icon slot="start" name="save-outline"></ion-icon>
+    Simpan Profil
+  </ion-button>
+
+  <div class="password-section">
+    <ion-item-divider color="light">
+      <ion-label>Ubah Kata Sandi</ion-label>
+    </ion-item-divider>
+    <ion-list lines="full" class="form-list">
+      <ion-item>
+        <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
+        <ion-label position="floating">Kata Sandi Saat Ini</ion-label>
+        <ion-input type="password" [(ngModel)]="password.current" name="currentPassword" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="lock-open-outline" slot="start" color="medium"></ion-icon>
+        <ion-label position="floating">Kata Sandi Baru</ion-label>
+        <ion-input type="password" [(ngModel)]="password.new" name="newPassword" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="checkmark-circle-outline" slot="start" color="medium"></ion-icon>
+        <ion-label position="floating">Konfirmasi Kata Sandi Baru</ion-label>
+        <ion-input type="password" [(ngModel)]="password.confirm" name="confirmPassword" clearInput></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block"(click)="savePassword()" style="margin-top: 10px;" class="ubah-password">
+      <ion-icon slot="start" name="key-outline"></ion-icon>
+      Ubah Kata Sandi
+    </ion-button>
+  </div>
+
+</ion-content>

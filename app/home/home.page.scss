@@ -1,0 +1,164 @@
+ion-content {
+  --background: #f9f9f9;
+  padding: 16px;
+
+  .header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    ion-avatar {
+      width: 48px;
+      height: 48px;
+    }
+
+    .user-info {
+      margin-left: 10px;
+
+      p {
+        margin: 0;
+        font-size: 14px;
+        color: #777;
+      }
+
+      strong {
+        font-size: 16px;
+        color: #000;
+      }
+    }
+
+    ion-icon {
+      font-size: 24px;
+      color: #333;
+    }
+  }
+
+  .promo-card {
+    background-color: #FF6B00;
+    color: white;
+    border-radius: 12px;
+    padding: 16px;
+
+    h3 {
+      margin: 0 0 6px 0;
+      font-size: 18px;
+    }
+
+    p {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    ion-button {
+      --background: white;
+      --color: #FF6B00;
+      --border-radius: 8px;
+    }
+  }
+
+ .layanan-card {
+  --background: #fff;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+
+  ion-item {
+    --padding-start: 12px;
+    --inner-padding-end: 12px;
+  }
+
+  ion-avatar {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon-wrapper {
+      border-radius: 12px;
+      padding: 10px;
+
+      ion-icon {
+        font-size: 22px;
+        color: #fff;
+      }
+    }
+  }
+
+  ion-label {
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0;
+      color: #000;
+    }
+
+    p {
+      font-size: 13px;
+      color: #666;
+      margin: 2px 0 0;
+    }
+  }
+
+  ion-icon[slot="end"] {
+    font-size: 20px;
+    color: #999;
+  }
+}
+
+
+  .statistik-section {
+    margin-top: 20px;
+
+    h4 {
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #000;
+    }
+
+    .stat-boxes {
+      display: flex;
+      justify-content: space-between;
+
+      .stat-box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        flex: 1;
+        margin-right: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        p {
+          margin: 0;
+
+          &:first-child {
+            font-weight: bold;
+            font-size: 20px;
+          }
+
+          &:last-child {
+            font-size: 13px;
+            color: #666;
+          }
+        }
+
+        &.done {
+          p:first-child {
+            color: #1E90FF;
+          }
+        }
+
+        &.total {
+          p:first-child {
+            color: #00C48C;
+          }
+        }
+      }
+    }
+  }
+}

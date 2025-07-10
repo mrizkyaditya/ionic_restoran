@@ -1,0 +1,110 @@
+<ion-content class="ion-padding" style="--background: #f9f9f9;">
+
+  <!-- Header -->
+<!-- Header -->
+<!-- Header -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+  <div style="display: flex; flex-direction: column;">
+    <p style="margin: 0;">{{ greeting }}</p>
+    <div *ngIf="username; else belumLogin" style="font-size: 16px; font-weight: bold;">
+      {{ username }}
+    </div>
+    <ng-template #belumLogin>
+      <div style="display: flex; gap: 6px; margin-top: 4px;">
+        <ion-button size="small" fill="solid" (click)="goToLogin()"
+          style="--background: #FF9500; --color: white;">
+          LOGIN
+        </ion-button>
+        <ion-button size="small" fill="outline" (click)="goToRegister()"
+          style="--border-color: #FF9500; --color: #FF9500;">
+          DAFTAR
+        </ion-button>
+      </div>
+    </ng-template>
+  </div>
+  <ion-icon name="notifications-outline" size="large"></ion-icon>
+</div>
+
+
+
+
+  <!-- Promo Banner -->
+  <div style="background: #FF6B00; color: white; border-radius: 12px; padding: 16px; margin-top: 10px;">
+    <h3 style="margin: 0 0 6px 0;">Selamat Datang Di Restaurant Restoku</h3>
+    <p style="margin: 0 0 10px 0;"></p>
+    <ion-button size="small" color="light" fill="solid">Lihat Detail</ion-button>
+  </div>
+
+  <!-- Pilih Layanan -->
+ <ion-card class="layanan-card reservasi">
+  <ion-item lines="none" button detail [routerLink]="['/dine-in','reservasi']">
+    <ion-avatar slot="start">
+      <div class="icon-wrapper" style="background-color: #3D8BFF;">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </div>
+    </ion-avatar>
+    <ion-label>
+      <h3>Reservasi</h3>
+      <p>Atur reservasi meja pelanggan</p>
+    </ion-label>
+  </ion-item>
+</ion-card>
+
+<!-- <ion-card class="layanan-card dinein">
+  <ion-item lines="none" button detail [routerLink]="['/dine-in','dinein']">
+    <ion-avatar slot="start">
+      <div class="icon-wrapper" style="background-color: #34C759;">
+        <ion-icon name="restaurant-outline"></ion-icon>
+      </div>
+    </ion-avatar>
+    <ion-label>
+      <h3>Dine In</h3>
+      <p>Layani pelanggan makan di tempat</p>
+    </ion-label>
+  </ion-item>
+</ion-card> -->
+
+<ion-card class="layanan-card takeaway">
+  <ion-item lines="none" button detail [routerLink]="['/dine-in','takeaway']">
+    <ion-avatar slot="start">
+      <div class="icon-wrapper" style="background-color: #FF9500;">
+        <ion-icon name="bag-handle-outline"></ion-icon>
+      </div>
+    </ion-avatar>
+    <ion-label>
+      <h3>Take Away</h3>
+      <p>Pesanan untuk dibawa pulang</p>
+    </ion-label>
+  </ion-item>
+</ion-card>
+
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button routerLink="/home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+    <ion-tab-button routerLink="/order">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <ion-label>Pesanan</ion-label>
+    </ion-tab-button>
+    <ion-tab-button routerLink="/profil">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Profil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+  <!-- Tombol logout di luar tab bar -->
+  <!-- <div style="text-align: center; padding: 8px;" *ngIf="username">
+  <ion-button color="danger" size="small" fill="clear" (click)="logout()">
+    <ion-icon name="log-out-outline" slot="start"></ion-icon>
+    Logout
+  </ion-button> -->
+<!-- </div> -->
+
+</ion-footer>
+

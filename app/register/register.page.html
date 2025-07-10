@@ -1,0 +1,87 @@
+<ion-content [fullscreen]="true" class="ion-padding register-page">
+  <div class="register-wrapper">
+    <div class="logo-container">
+      <img src="assets/logo.png" alt="RestoPOS Logo" class="logo" />
+    </div>
+
+    <ion-card class="register-box">
+      <ion-card-content>
+
+        <!-- Username -->
+        <ion-item lines="none">
+          <ion-icon slot="start" name="person-outline"></ion-icon>
+          <ion-input
+            type="text"
+            placeholder="Masukkan username"
+            [(ngModel)]="username"
+          ></ion-input>
+        </ion-item>
+
+        <!-- Email -->
+        <ion-item lines="none">
+          <ion-icon slot="start" name="mail-outline"></ion-icon>
+          <ion-input
+            type="email"
+            placeholder="Masukkan email"
+            [(ngModel)]="email"
+          ></ion-input>
+        </ion-item>
+
+        <!-- No HP -->
+        <ion-item lines="none">
+          <ion-icon slot="start" name="call-outline"></ion-icon>
+          <ion-input
+            type="tel"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="15"
+            placeholder="Masukkan no HP"
+            [(ngModel)]="phone"
+          ></ion-input>
+        </ion-item>
+
+        <!-- Password -->
+        <ion-item lines="none">
+          <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Masukkan password"
+            [(ngModel)]="password"
+          ></ion-input>
+          <ion-icon
+            slot="end"
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+            (click)="togglePassword()"
+          ></ion-icon>
+        </ion-item>
+
+        <!-- Konfirmasi Password -->
+      <ion-item lines="none">
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+        <ion-input
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          placeholder="Konfirmasi password"
+          [(ngModel)]="confirmPassword"
+        ></ion-input>
+        <ion-icon
+          slot="end"
+          [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"
+          (click)="toggleConfirmPassword()"
+        ></ion-icon>
+      </ion-item>
+
+
+        <!-- Tombol Register -->
+        <ion-button expand="block" class="register-button" (click)="register()">
+          Daftar
+        </ion-button>
+
+        <!-- Kembali ke Login -->
+        <div class="text-center mt-2">
+          <a (click)="goToLogin()" style="color: #ff6b2c;">Sudah punya akun? Login</a>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

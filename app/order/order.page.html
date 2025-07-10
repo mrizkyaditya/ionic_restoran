@@ -1,0 +1,97 @@
+<ion-content class="ion-padding">
+  <ion-card *ngIf="transaksis.length === 0">
+    <ion-card-header>
+      <ion-card-title>Tidak ada pesanan</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Kamu belum membuat pesanan apa pun.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngFor="let transaksi of transaksis; let i = index" (click)="toggleDetails(i)">
+    <ion-card-header>
+      <ion-card-subtitle>{{ transaksi.created_at | date:'short' }}</ion-card-subtitle>
+      <ion-card-subtitle>{{ transaksi.kode_transaksi }}</ion-card-subtitle>
+      <ion-card-title>
+        <ion-icon [name]="getIcon(transaksi.order.jenis_order)" style="margin-right: 8px;"></ion-icon>
+        {{ transaksi.order.jenis_order }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Total: Rp{{ transaksi.total_harga | number:'1.0-0' }}</p>
+      <p>Metode Pembayaran: {{ transaksi.metode_pembayaran }}</p>
+      <p>Status Pembayaran: {{transaksi.status_pembayaran}} </p>
+      <!-- <p *ngIf="expandedIndex !== i" style="color: brown;">Klik untuk lihat detail</p> -->
+    </ion-card-content>
+
+    <!-- Detail hanya jika diperluas -->
+    <ng-container >
+      <ion-list>
+        <ion-item *ngFor="let item of transaksi.order.details">
+          <ion-avatar slot="start">
+            <img [src]="item.menu.gambar_menu">
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ item.menu.nama_menu }}</h2>
+            <p>{{ item.jumlah }}x - Rp{{ item.menu.harga_menu * item.jumlah | number:'1.0-0' }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-card *ngIf="transaksi.order.jenis_order == 'reservasi'">
+        <ion-card-header>
+          <ion-card-title>Data Reservasi</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Meja: {{ transaksi.order.meja.nama_meja }} </p>
+          <p>Tanggal dan Jam: {{ transaksi.reservasi.tanggal_dan_jam}} </p>
+          <p>Status Reservasi: {{transaksi.reservasi.status_reservasi}} </p>
+        
+          <div [id]="'qrcode-' + i" style="margin-top: 16px;"></div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card-header >
+       <ion-card-title>Bukti Pembayaran</ion-card-title>
+       
+       <ion-card-content *ngIf="transaksi.status_pembayaran === 'belum'">
+          <form #f="ngForm" (ngSubmit)="uploadBuktiPembayaran(transaksi.id, f)">
+            <input type="file" accept=".png, .jpg, .jpeg" (change)="onFileChange(transaksi.id, $event)">
+            <button>
+              <span *ngIf="transaksi.bukti_pembayaran == null; else editBtn">Upload</span>
+              <ng-template #editBtn>Edit</ng-template>
+            </button>
+          </form>
+        </ion-card-content> 
+
+        <ion-card-content *ngIf="transaksi.bukti_pembayaran != null" >
+          <img *ngIf="expandedIndex === i" [src]="transaksi.bukti_pembayaran" alt="Bukti Pembayaran" style="width: 100%; border-radius: 8px;" />
+          <p [hidden]="expandedIndex === i">Klik untuk melihat bukti pembayaran</p>
+        </ion-card-content>
+
+      </ion-card-header>
+    </ng-container>
+  </ion-card>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button routerLink="/home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button routerLink="/order">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <ion-label>Pesanan</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button routerLink="/profil">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Profil</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>
+

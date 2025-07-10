@@ -1,0 +1,134 @@
+
+<ion-content class="ion-padding">
+    <!-- ORDER STATUS -->
+  <ion-card class="ion-text-center" style="background: linear-gradient(to right, #ffecd2, #fcb69f); color: #333;">
+    <ion-card-content>
+      <ion-icon
+        name="restaurant"
+        style="font-size: 24px;">
+      </ion-icon>
+      <div style="font-weight: bold; font-size: 18px; margin-top: 6px;">
+        
+        {{ orderType }}
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <!-- Info Meja (hanya jika reservasi) -->
+    <ion-card *ngIf="orderType === 'reservasi' && selectedMeja">
+      <ion-card-header>
+        <ion-card-title>Informasi Meja Reservasi</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Nama Meja:</strong> {{ selectedMeja.nama_meja }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- ORDER ITEMS -->
+    <ion-text color="medium"><strong>ORDER ITEMS</strong></ion-text>
+    <ion-list *ngIf="cartList.length > 0; else noItems">
+      <ion-item *ngFor="let item of cartList">
+        <ion-avatar slot="start">
+          <img [src]="item.menu.gambar_menu" alt="{{ item.menu.nama_menu }}">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ item.menu.nama_menu }}</h2>
+        </ion-label>
+        <ion-note slot="end">{{ item.jumlah }}x</ion-note>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #noItems>
+      <ion-text color="medium" class="ion-padding">
+        Tidak ada item dalam keranjang.
+      </ion-text>
+    </ng-template>
+
+    <ion-card *ngIf="orderType === 'reservasi'">   <!--pakai untuk reservasi akan muncul -->
+      <ion-card-header>
+        <ion-card-title>Data Reservasi</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- Tanggal dan Jam -->
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime [showDefaultButtons]="true" id="datetime" [(ngModel)]="tanggalDanJam"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- PAYMENT DETAIL CARD -->
+    <div style="margin: 16px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 16px; background: white;">
+      <h4 style="font-weight: bold; margin-bottom: 12px;">PAYMENT DETAIL</h4>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center;">
+          <ion-icon name="card-outline" style="font-size: 20px; margin-right: 8px;"></ion-icon>
+          <span style="font-weight: 500;">{{ selectedPaymentMethod || 'select payment method' }}</span>
+        </div>
+        <a (click)="openPaymentOptions()" style="color: #000; font-weight: 500;">SELECT</a>
+      </div>
+
+      <hr style="margin: 12px 0;">
+
+      <div style="font-size: 14px; color: #888;">Payment Method</div>
+      <div style="font-weight: bold;">{{ selectedPaymentMethod || '-' }}</div>
+      <!-- ✅ Tambahan info rekening -->
+    <div *ngIf="paymentDetails[selectedPaymentMethod]" style="margin-top: 8px; font-size: 14px; color: #444;">
+      <ion-icon name="information-circle-outline" style="margin-right: 6px;"></ion-icon>
+      <strong>No. Rekening:</strong> {{ paymentDetails[selectedPaymentMethod] }}
+    </div>
+    </div>
+
+    <!-- Action Sheet untuk memilih metode -->
+    <ion-action-sheet
+      [isOpen]="showPaymentOptions"
+      header="Select Payment Method"
+      (didDismiss)="showPaymentOptions = false"
+      [buttons]="paymentOptions">
+    </ion-action-sheet>
+
+    <!-- ORDER SUMMARY -->
+    <div style="margin-top: 24px;">
+      <ion-text color="medium"><strong>ORDER SUMMARY</strong></ion-text>
+      <ion-list>
+        <ion-item *ngFor="let item of cartList">
+          <ion-label>{{ item.menu.nama_menu }}</ion-label>
+          <ion-note slot="end">Rp {{ item.menu.harga_menu * item.jumlah }}</ion-note>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label><strong>TOTAL</strong></ion-label>
+          <ion-note slot="end"><strong>Rp {{ totalPrice }}</strong></ion-note>
+        </ion-item>
+      </ion-list>
+    </div>
+
+  <ion-button expand="block" color="success" class="ion-margin-top" (click)="submitOrder()">
+    Order Now
+  </ion-button>
+
+</ion-content>
+
+
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button routerLink="/home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button routerLink="/order">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <ion-label>Order</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button routerLink="/profil">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-footer>

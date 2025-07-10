@@ -1,0 +1,55 @@
+.custom-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.custom-input::placeholder {
+  color: #999;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+.custom-input:focus::placeholder {
+  opacity: 0;
+}
+
+.custom-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.radio-row {
+  display: flex;
+  justify-content: center;
+  gap: 50px; /* Jarak antar radio button lebih lega */
+}
+
+.radio-row label {
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Jarak antara radio dan tulisan */
+  user-select: none;
+  font-size: 15px;
+  margin: 0 5px;
+}
+
+.radio-row input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}

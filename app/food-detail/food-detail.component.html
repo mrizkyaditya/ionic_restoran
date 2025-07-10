@@ -1,0 +1,45 @@
+<ion-content class="ion-padding">
+  <!-- Close button -->
+  <ion-toolbar>
+    <ion-title>Menu Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="dismiss()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <div class="detail-container">
+    <!-- Food image -->
+    <img [src]="menu.gambar_menu" alt="{{ menu.nama_menu }}" class="food-image" />
+
+    <!-- Food info -->
+    <div class="food-info">
+      <h2>{{ menu.nama_menu }}</h2>
+      <!-- <p>{{ maka.description }}</p> -->
+    </div>
+
+    <!-- Quantity & price -->
+    <div class="quantity-price">
+      <ion-button fill="clear" (click)="orderPage.decreaseFromCart(menu.id)">
+        <ion-icon name="remove-outline"></ion-icon>
+      </ion-button>
+
+      <span class="quantity">{{ orderPage.cartList[menu.id] }}</span>
+
+      <ion-button fill="clear" (click)="orderPage.increaseToCart(menu.id)">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+
+      <span class="price">Rp{{ getMenuTotalPrice() }}</span>
+    </div>
+  </div>
+
+  <!-- Checkout button -->
+
+    <ion-button expand="block" (click)="orderPage.goToOrderDetail()"  style="--background: orange; --color: #000000;">
+      Checkout - Rp{{ getMenuTotalPrice() }}
+    </ion-button>
+
+
+</ion-content>
